@@ -1,0 +1,33 @@
+---
+- name: ensure droplets exists
+  digital_ocean: >
+    state=present
+    command=droplet
+    name={{ item }}
+    unique_name={{ unique_name }}
+    size_id={{ size_id }}
+    region_id={{ region_id }}
+    image_id={{ image_id }}
+    ssh_key_ids={{ ssh_pub_key.ssh_key.id }}
+    api_token={{ api_token }}
+    wait_timeout={{ wait_timeout }}
+  with_items: "{{ droplet_names }}"
+  register: droplet_details
+
+- debug:
+    msg:
+    - "{{ item.droplet.name }}"
+    - "ID is {{ item.droplet.id }}"
+    - "IP is {{ item.droplet.ip_address }}"
+  with_items: "{{ droplet_details.results }}"
+
+- name: add droplet ips to .envrc
+  lineinfile: >
+    dest=~/workspace/devops-examples/ansible/.envrc
+    line='export {{ item.droplet.name }}_IP={{ item.droplet.ip_address }}'
+    insertafter='EOF'
+    state=present
+  with_items: "{{ droplet_details.results }}"
+
+- name: make droplet ips available to the environment
+  shell: direnv allow
