@@ -1,0 +1,3 @@
+---
+ssh_pub_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+api_token: "{{ lookup('file', '~/.vault/do_token') }}"

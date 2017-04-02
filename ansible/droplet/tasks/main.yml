@@ -1,0 +1,16 @@
+---
+- name: ensure droplet exists
+  digital_ocean: >
+    state=present
+    command=droplet
+    name=droplet-one
+    size_id={{ size_id }}
+    region_id={{ region_id }}
+    image_id={{ image_id }}
+    ssh_key_ids={{ ssh_pub_key.ssh_key.id }}
+    api_token={{ api_token }}
+    wait_timeout={{ wait_timeout }}
+  register: droplet_one
+
+- debug: msg="ID is {{ droplet_one.droplet.id }}"
+- debug: msg="IP is {{ droplet_one.droplet.ip_address }}"
