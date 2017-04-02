@@ -2,14 +2,14 @@
 
 set -e
 
-ping () {
+check () {
   set -x
-  ansible web_servers -i hosts.ini -m ping
+  ansible-playbook playbook.yml --syntax-check
 }
 
 provision () {
   set -x
-  ansible-playbook playbook.yml --syntax-check
+  check
   ansible-playbook playbook.yml
 }
 
@@ -21,7 +21,7 @@ setup () {
 usage () {
 cat <<EOF
   Usage:
-    ping|pi         ping web servers
+    check|c         validate playbook
     provision|pr    provision web servers
     setup|s         install necessary tooling
     *               see usage
@@ -29,7 +29,7 @@ EOF
 }
 
 case $1 in
-  ping|pi)        ping        ;;
+  check|c)        check       ;;
   provision|pr)   provision   ;;
   setup|s)        setup       ;;
   *)              usage       ;;

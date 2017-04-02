@@ -1,5 +1,5 @@
 ---
-- name: ensure droplets exists
+- name: ensure droplets exist
   digital_ocean: >
     state=present
     command=droplet
@@ -20,14 +20,3 @@
     - "ID is {{ item.droplet.id }}"
     - "IP is {{ item.droplet.ip_address }}"
   with_items: "{{ droplet_details.results }}"
-
-- name: add droplet ips to .envrc
-  lineinfile: >
-    dest=~/workspace/devops-examples/ansible/.envrc
-    line='export {{ item.droplet.name }}_IP={{ item.droplet.ip_address }}'
-    insertafter='EOF'
-    state=present
-  with_items: "{{ droplet_details.results }}"
-
-- name: make droplet ips available to the environment
-  shell: direnv allow
