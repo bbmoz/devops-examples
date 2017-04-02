@@ -1,6 +1,6 @@
-# DevOps Examples
+# Infrastructure Config Examples
 
-> Comparison between ansible and terraform for provisioning.
+> Comparison between ansible and terraform for server creation and configuration.
 
 ## Goal
 
