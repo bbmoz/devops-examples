@@ -1,9 +1,10 @@
 resource "digitalocean_droplet" "droplet" {
-  name = "DROPLET_ONE"
+  name = "droplet.${count.index}"
   size = "${var.size_id}"
   region = "${var.region_id}"
   image = "${var.image_id}"
-  ssh_keys = ["${digitalocean_ssh_key.ssh.fingerprint}"]
+  ssh_keys = ["${digitalocean_ssh_key.ssh.fingerprint}"],
+  count = "${var.count}"
 }
 
 output "debug" {

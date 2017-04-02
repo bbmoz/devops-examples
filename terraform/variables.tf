@@ -20,3 +20,8 @@ variable "image_id" {
   description = "image of droplet"
   default = "ubuntu-16-04-x64"
 }
+
+variable "count" {
+  description = "number of droplets"
+  default = "2"
+}
